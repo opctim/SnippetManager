@@ -1,0 +1,115 @@
+@import "colors.less";
+
+@import url(../lib/GoogleFonts/css/fonts.css);
+
+::-moz-selection {
+  color: @white;
+  background-color: @red;
+}
+::selection {
+  color: @white;
+  background-color: @red;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: @darkGrey;
+  font-family: 'Raleway', sans-serif;
+}
+
+.outer-wrapper {
+  .sidebar {
+    background-color: darken(@darkGrey, 10%);
+    height: 100vh;
+    width: 20%;
+    display: block;
+    float: left;
+    box-shadow: 15px 0 20px rgba(0, 0, 0, 0.2);
+    h1.logo {
+      color: @red;
+      font-size: 25px;
+      text-align: center;
+      text-shadow: 0 0 2px rgba(0,0,0,0.5);
+      small {
+        font-size: 15px;
+        font-weight: 200;
+      }
+    }
+    .nav {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      margin-top: 50px;
+      li {
+        background-color: @red;
+        color: @white;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        margin-bottom: 15px;
+        font-size: 12px;
+        display: block;
+        position: relative;
+        margin-right: -15px;
+        -webkit-transition: all 200ms ease-out;
+        -moz-transition: all 200ms ease-out;
+        -ms-transition: all 200ms ease-out;
+        -o-transition: all 200ms ease-out;
+        transition: all 200ms ease-out;
+        &:before {
+          content: "";
+          position: absolute;
+          right: 0;
+          background-color: darken(@red, 10%);
+          height: 100%;
+          width: 50px;
+          bottom: 0;
+          z-index: -1;
+          transform-origin: bottom right;
+          -webkit-transform: rotate(-23deg);
+          -moz-transform: rotate(-23deg);
+          -ms-transform: rotate(-23deg);
+          -o-transform: rotate(-23deg);
+          transform: rotate(-23deg);
+        }
+        &.active, &:hover {
+          box-shadow: -10px 0 20px rgba(0, 0, 0, 0.6);
+          margin-right: -30px;
+          font-size: 14px;
+          &:before {
+            background-color: darken(@red, 5%);
+          }
+          a {
+            background-color: @red;
+          }
+        }
+        a {
+          padding: 10px 10px 10px 30px;
+          display: block;
+          color: @white;
+          text-decoration: none;
+          &:active, &:visited, &:focus {
+            text-decoration: none;
+            background-color: @red;
+          }
+          .fa {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+  .content {
+    height: 100vh;
+    width: 80%;
+    display: block;
+    float: left;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    color: @lightGrey;
+    padding: 15px 50px 15px 80px;
+    box-sizing: border-box;
+  }
+}

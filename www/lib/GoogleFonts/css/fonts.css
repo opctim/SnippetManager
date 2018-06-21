@@ -1,0 +1,56 @@
+/* raleway-200 - latin */
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 200;
+    src: url('../fonts/raleway-v12-latin-200.eot'); /* IE9 Compat Modes */
+    src: local('Raleway ExtraLight'), local('Raleway-ExtraLight'),
+    url('../fonts/raleway-v12-latin-200.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/raleway-v12-latin-200.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../fonts/raleway-v12-latin-200.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/raleway-v12-latin-200.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/raleway-v12-latin-200.svg#Raleway') format('svg'); /* Legacy iOS */
+}
+
+/* raleway-italic - latin */
+@font-face {
+    font-family: 'Raleway';
+    font-style: italic;
+    font-weight: 400;
+    src: url('../fonts/raleway-v12-latin-italic.eot'); /* IE9 Compat Modes */
+    src: local('Raleway Italic'), local('Raleway-Italic'),
+    url('../fonts/raleway-v12-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/raleway-v12-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../fonts/raleway-v12-latin-italic.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/raleway-v12-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/raleway-v12-latin-italic.svg#Raleway') format('svg'); /* Legacy iOS */
+}
+
+/* raleway-regular - latin */
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/raleway-v12-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('Raleway'), local('Raleway-Regular'),
+    url('../fonts/raleway-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/raleway-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../fonts/raleway-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/raleway-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/raleway-v12-latin-regular.svg#Raleway') format('svg'); /* Legacy iOS */
+}
+
+
+/* anonymous-pro-regular - latin */
+@font-face {
+    font-family: 'Anonymous Pro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/anonymous-pro-v11-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('Anonymous Pro Regular'), local('AnonymousPro-Regular'),
+    url('../fonts/anonymous-pro-v11-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/anonymous-pro-v11-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../fonts/anonymous-pro-v11-latin-regular.woff') format('woff'), /* Modern Browsers */
+    url('../fonts/anonymous-pro-v11-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../fonts/anonymous-pro-v11-latin-regular.svg#AnonymousPro') format('svg'); /* Legacy iOS */
+}
