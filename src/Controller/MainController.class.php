@@ -16,7 +16,7 @@ use SnippetManager\View\Snippets;
 
 class MainController {
 	public function __construct() {
-		if (defined(SM_DEBUG) && SM_DEBUG == true) {
+		if (SM_DEBUG) {
 			error_reporting(E_ALL);
 			ini_set("display_errors", "1");
 		}
@@ -57,6 +57,7 @@ class MainController {
 			$document->setMenu($menu);
 
 			echo $document->render();
+			echo "hi";
 		});
 	}
 }
