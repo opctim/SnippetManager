@@ -35,6 +35,7 @@ class Snippets extends View {
 			<div id="snippet-list">
 				' . $this->renderSnippets(\SnippetManager\Model\Snippets::get()) . '
 			</div>
+			' . $this->getAddSnippetPopup() . '
 		';
 	}
 
@@ -100,6 +101,16 @@ class Snippets extends View {
 
 		return '
 			<pre class="hljs ' . $result->language . '"><code>' . $result->value . '</code></pre>
+		';
+	}
+
+	protected function getAddSnippetPopup() {
+		return '
+			<div id="new-snippet">
+				<form>
+					<input type="text" class="">
+				</form>
+			</div>
 		';
 	}
 }
