@@ -12,7 +12,13 @@ class Database extends \mysqli {
 	private static $instance = null;
 
 	public function __construct() {
-		parent::__construct(SM_DB_HOST, SM_DB_USER, SM_DB_PASSWORD, SM_DB_NAME);
+		$result = parent::__construct(SM_DB_HOST, SM_DB_USER, SM_DB_PASSWORD, SM_DB_NAME);
+
+		if (!$result && error_reporting() !== E_ALL) {
+			echo "<h1>Invalid database connection.</h1>";
+
+			exit;
+		}
 
 		$this->set_charset("utf8");
 	}
