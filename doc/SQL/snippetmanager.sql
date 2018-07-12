@@ -1,3 +1,7 @@
+CREATE DATABASE snippetmanager;
+
+USE snippetmanager;
+
 -- phpMyAdmin SQL Dump
 -- version 4.8.1
 -- https://www.phpmyadmin.net/

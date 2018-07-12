@@ -108,7 +108,12 @@ class Snippets extends View {
 		return '
 			<div id="new-snippet">
 				<form>
-					<input type="text" class="">
+					<select name="category">
+						
+					</select>
+					<input type="text" name="name">
+					<input type="text" name="name">
+					<select class="select2 tags" multiple></select>
 				</form>
 			</div>
 		';
