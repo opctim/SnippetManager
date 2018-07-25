@@ -17,20 +17,41 @@ class Snippets extends View {
 
 	public function init() {
 		$this->parent->addJavaScriptFiles([
-			"snippets-main"	=> "js/snippets.js"
+			"select2js"		=> "lib/Select2/select2.min.js",
+			"snippets-main"	=> "js/snippets.js",
 		]);
 
 		$this->parent->addCssFiles([
-			"snippets-css"	=> "css/snippets.page.css"
+			"select2css"	=> "lib/Select2/select2.min.css",
+			"snippets-css"	=> "css/snippets.page.css",
 		]);
+
+		$this->parent->addHeadHtml('
+			<script type="text/javascript">
+				$(document).ready(function(){
+				   	$("select.select2:not(.tags)").select2();
+				   	$("select.select2.tags").select2({
+				   		tags: true,
+				   		tokenSeparators: [",", " "]
+				   	});
+				});
+			</script>
+		');
 	}
 
 	public function getBody(): string {
 		return '
 			<h1>' . $this->getTitle() . '</h1>
-			<div class="search-wrapper">
-				<input type="text" id="search-field" placeholder="Suchen..." autofocus>
-				<i class="fa fa-spinner fa-spin"></i>
+			<div class="row">
+				<div class="col-md-8">
+					<div class="search-wrapper">
+						<input type="text" id="search-field" placeholder="Suchen..." autofocus>
+						<i class="fa fa-spinner fa-spin"></i>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="add-snippet"><i class="fa fa-plus-circle"></i> Neu</div>
+				</div>
 			</div>
 			<div id="snippet-list">
 				' . $this->renderSnippets(\SnippetManager\Model\Snippets::get()) . '
@@ -108,12 +129,24 @@ class Snippets extends View {
 		return '
 			<div id="new-snippet">
 				<form>
-					<select name="category">
-						
-					</select>
-					<input type="text" name="name">
-					<input type="text" name="name">
-					<select class="select2 tags" multiple></select>
+					<div class="close-btn" onclick="$(\'#new-snippet\').fadeOut()"><i class="fa fa-times-circle"></i></div>
+					<h1>Neues Snippet hinzufügen</h1>
+					<div style="padding: 40px;">
+						<br>
+						<h5>Kategorie</h5>
+						<select class="select2" name="category">
+							
+						</select>
+						<br>
+						<br>
+						<input type="text" name="name" placeholder="Name" required>
+						<textarea name="text" placeholder="(new Foo())->bar();"></textarea>
+						<br>
+						<br>
+						<h5>Tags</h5>
+						<select class="select2 tags" multiple></select>
+						<button type="submit" class="btn btn-primary">Speichern</button>
+					</div>
 				</form>
 			</div>
 		';

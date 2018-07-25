@@ -115,3 +115,16 @@ body {
     box-sizing: border-box;
   }
 }
+
+.btn.btn-primary {
+  background-color: @red;
+  color: @white;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  border-color: @red;
+  &:active {
+    background-color: darken(@darkGrey, 10%);
+    color: @red;
+    border-color: @red;
+  }
+}

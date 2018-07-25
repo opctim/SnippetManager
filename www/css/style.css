@@ -112,3 +112,15 @@ body {
   padding: 15px 50px 15px 80px;
   box-sizing: border-box;
 }
+.btn.btn-primary {
+  background-color: #d60d31;
+  color: #fff;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  border-color: #d60d31;
+}
+.btn.btn-primary:active {
+  background-color: #2f2f2f;
+  color: #d60d31;
+  border-color: #d60d31;
+}

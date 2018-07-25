@@ -113,3 +113,153 @@
     }
   }
 }
+
+#new-snippet {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    background-color: darken(@darkGrey, 10%);
+    & > h1 {
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background-color: @red;
+      font-size: 20px;
+    }
+    & > div > input {
+      background-color: inherit;
+      border: none;
+      color: @lightGrey;
+      border-bottom: 2px solid @lightGrey;
+      width: 100%;
+      -webkit-transition: all 150ms;
+      -moz-transition: all 150ms;
+      -ms-transition: all 150ms;
+      -o-transition: all 150ms;
+      transition: all 150ms;
+      &:focus {
+        border-color: @red;
+      }
+    }
+    textarea {
+      resize: vertical;
+      background-color: inherit;
+      border: 2px solid @lightGrey;
+      color: @lightGrey;
+      min-height: 100px;
+      width: 100%;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2) inset;
+      -webkit-transition: all 150ms;
+      -moz-transition: all 150ms;
+      -ms-transition: all 150ms;
+      -o-transition: all 150ms;
+      transition: all 150ms;
+      &:focus {
+        border-color: @red;
+      }
+    }
+    .btn.btn-primary {
+      margin-top: 20px;
+      width: 100%;
+    }
+    .select2 {
+      width: 100%;
+    }
+    & > div > input, textarea, .select2 {
+      margin-bottom: 20px;
+    }
+    .close-btn {
+      position: absolute;
+      top: -30px;
+      right: -23px;
+      color: @lightGrey;
+      cursor: pointer;
+      font-size: 19px;
+      &:hover {
+        color: @red;
+      }
+    }
+  }
+}
+
+
+.select2-container {
+  .select2-selection--single, .select2-selection--multiple {
+    border-radius: 0;
+    border: 2px solid @lightGrey !important;
+    background-color: transparent;
+    color: @lightGrey;
+    height: auto;
+    padding: 2px;
+    .select2-selection__rendered {
+      color: @lightGrey;
+    }
+    .select2-selection__arrow {
+      top: 4px;
+    }
+  }
+  &.select2-container--open {
+    .select2-selection--single, .select2-selection--multiple {
+      border-color: @red !important;
+      border-width: 2px;
+    }
+  }
+}
+.select2-dropdown {
+  background-color: darken(@darkGrey, 10%);
+  color: @lightGrey;
+  border-radius: 0;
+  border-width: 2px;
+  border-color: @red;
+  .select2-search__field {
+    transition: all 150ms;
+    padding: 6px;
+    font-weight: 300;
+    border: 2px solid @lightGrey !important;
+    color: @lightGrey;
+    background-color: transparent;
+    &:focus {
+      border-color: @red !important;
+    }
+  }
+  .select2-results__options {
+    .select2-results__option {
+      &[aria-selected="true"] {
+        background-color: @red;
+        color: @white;
+      }
+      &.select2-results__option--highlighted:not([aria-selected="true"]) {
+        background-color: darken(@darkGrey, 10%);
+        color: @red;
+      }
+    }
+  }
+}
+.select2-container--default .select2-results > .select2-results__options {
+  max-height: 300px;
+}
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
+  background-color: darken(@darkGrey, 10%);
+}
+.select2-selection__choice {
+  background-color: @lightGrey !important;
+  color: @darkGrey;
+  border: none !important;
+}
