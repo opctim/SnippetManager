@@ -52,6 +52,66 @@ $(document).ready(function(){
         }, 600);
     });
 
+    var newSnippetElement = $("#new-snippet");
+
+    function resetNewSnippetForm() {
+        var form = newSnippetElement.children("form");
+
+        $(".select2:not(.tags) option").prop("selected", false);
+        $(".select2:not(.tags) option:first-child").prop("selected", true);
+        $(".select2:not(.tags)").trigger("change");
+        $(".select2.tags").empty().trigger("change");
+        form.get(0).reset();
+    }
+
+    newSnippetElement.find("form .close-btn").click(function(){
+        var form = $(this).parent("form");
+
+        $("#new-snippet").fadeOut();
+
+        resetNewSnippetForm();
+    });
+
+    $(".add-snippet").click(function(){
+        $("#new-snippet").fadeIn();
+    });
+
+    newSnippetElement.submit(function(e){
+        e.preventDefault();
+
+        var form = newSnippetElement.find("form");
+
+        form.css({
+            filter: "blur(5px)",
+            opacity: "0.75"
+        });
+
+        $.ajax({
+            url: "index.php",
+            data: {
+                newsnippet: {
+                    categoryId: form.find(':input[name="category"]').val(),
+                    name: form.find(':input[name="name"]').val(),
+                    text: form.find(':input[name="text"]').val(),
+                    tags: form.find(':input[name="tags"]').val().join(" ")
+                }
+            },
+            success: function(response){
+                reloadSnippets(function(){
+                    newSnippetElement.fadeOut();
+                    resetNewSnippetForm();
+
+                    form.css({
+                        filter: "none",
+                        opacity: "1"
+                    });
+                })
+            }
+        });
+
+        return false;
+    });
+
     var lastHtml = null;
 
     function reloadSnippets(done) {

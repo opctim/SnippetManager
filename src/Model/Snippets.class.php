@@ -31,10 +31,11 @@ class Snippets {
 					SNIPPET_TAGS LIKE '%$searchTerm%' OR
 					SNIPPET_TEXT LIKE '%$searchTerm%' OR
 					SNIPPET_NAME LIKE '%$searchTerm%'
+				ORDER BY SNIPPET_CREATED DESC
 			");
 		}
 		else {
-			$result = $db->query("SELECT * FROM snippet LEFT JOIN category USING(CATEGORY_ID)");
+			$result = $db->query("SELECT * FROM snippet LEFT JOIN category USING(CATEGORY_ID) ORDER BY SNIPPET_CREATED DESC");
 		}
 
 		foreach ($result->getRows() as $row)

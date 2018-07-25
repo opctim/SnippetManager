@@ -17,6 +17,7 @@ class Snippet {
 	public $Name = null;
 	public $Text = null;
 	public $Tags = null;
+	public $Created = null;
 
 	public function __construct($databaseData) {
 		$this->databaseData = $databaseData;
@@ -26,6 +27,7 @@ class Snippet {
 		$this->Name = $databaseData->SNIPPET_NAME;
 		$this->Text = $databaseData->SNIPPET_TEXT;
 		$this->Tags = $databaseData->SNIPPET_TAGS;
+		$this->Created = $databaseData->SNIPPET_CREATED;
 	}
 
 	public function getCategory() {
@@ -42,5 +44,31 @@ class Snippet {
 		$db->query("UPDATE snippet SET SNIPPET_NAME = '$snippetName', SNIPPET_TEXT = '$snippetText', SNIPPET_TAGS = '$snippetTags' WHERE SNIPPET_ID = " . $this->internalId);
 
 		return $db->affected_rows > 0;
+	}
+
+	public static function create($categoryId, $name, $text, $tags) {
+		$db = Database::getInstance();
+
+		$categoryId = $db->real_escape_string($categoryId);
+		$name = $db->real_escape_string($name);
+		$text = $db->real_escape_string($text);
+		$tags = $db->real_escape_string($tags);
+
+		$db->query("INSERT INTO snippet(CATEGORY_ID, SNIPPET_NAME, SNIPPET_TEXT, SNIPPET_TAGS) VALUES($categoryId, '$name', '$text', '$tags')");
+
+		if ($db->insert_id == 0)
+			return false;
+
+		$stdClass = new \stdClass();
+
+		$stdClass->ID = $db->insert_id;
+		$stdClass->Name = $name;
+		$stdClass->Text = $text;
+		$stdClass->Tags = $tags;
+		$stdClass->Created = date("Y-m-d H:i:s");
+
+		$stdClass = (object)array_merge((array)$stdClass, (array)Categories::get($categoryId));
+
+		return new Snippet($stdClass);
 	}
 }

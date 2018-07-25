@@ -10,5 +10,7 @@ define("SM_DB_NAME", "snippetmanager");
 
 define("SM_DEBUG", true);
 
+define("SM_DEFAULT_CATEGORY_COLOR", "#d60d31");
+
 define("SM_FULL_URL", (isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 define("AJAX_CALL_LEGAL", isset($_SERVER["HTTP_REFERER"]) && preg_match("/^".preg_quote((isset($_SERVER["HTTPS"]) ? "https" : "http") . "://$_SERVER[HTTP_HOST]", "/")."/", $_SERVER["HTTP_REFERER"]));

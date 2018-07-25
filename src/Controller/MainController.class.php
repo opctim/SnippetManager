@@ -8,6 +8,7 @@
 namespace SnippetManager\Controller;
 
 use SnippetManager\Model\Redirect;
+use SnippetManager\Model\Snippet;
 use SnippetManager\View\Category;
 use SnippetManager\View\Document;
 use SnippetManager\View\EditSnippet;
@@ -31,6 +32,19 @@ class MainController {
 
 		$ajaxRequestManager->add("snippets", function($requestData){
 			echo Snippets::renderSnippets(\SnippetManager\Model\Snippets::get($requestData));
+		});
+
+		$ajaxRequestManager->add("newsnippet", function($requestData){
+			$defaults = [
+				"categoryId"	=> null,
+				"name"			=> null,
+				"text"			=> null,
+				"tags"			=> null,
+			];
+
+			$requestData = (object)array_replace($defaults, $requestData);
+
+			Snippet::create($requestData->categoryId, $requestData->name, $requestData->text, $requestData->tags);
 		});
 
 		$ajaxRequestManager->setDefault(function(){
@@ -57,7 +71,6 @@ class MainController {
 			$document->setMenu($menu);
 
 			echo $document->render();
-			echo "hi";
 		});
 	}
 }

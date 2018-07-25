@@ -8,6 +8,7 @@
 namespace SnippetManager\View;
 
 use Highlight\Highlighter;
+use SnippetManager\Model\Categories;
 use SnippetManager\Model\Snippet;
 
 class Snippets extends View {
@@ -29,7 +30,15 @@ class Snippets extends View {
 		$this->parent->addHeadHtml('
 			<script type="text/javascript">
 				$(document).ready(function(){
-				   	$("select.select2:not(.tags)").select2();
+				   	$("select.select2:not(.tags)").each(function(){
+				   	    if (typeof $(this).data("placeholder") !== "undefined")
+				   	    	$(this).select2({
+				   	    		placeholder: $(this).data("placeholder")
+				   	    	});
+				   	    else
+				   	        $(this).select2();
+				   	});
+				   
 				   	$("select.select2.tags").select2({
 				   		tags: true,
 				   		tokenSeparators: [",", " "]
@@ -70,25 +79,31 @@ class Snippets extends View {
 		$output[] = '<div class="row">';
 
 		foreach ($snippets as $snippet) {
+			$textColor = "#ffffff";
+			$difference = self::luminosityDifference($textColor, $snippet->getCategory()->getColor());
+
+			if ($difference < 5)
+				$textColor = "#000000";
+
 			$output[] = '
 				<div class="col-md-4">
-					<div class="snippet">
+					<div class="snippet" style="color: ' . $textColor . ';">
 						<div class="row">
 							<div class="col-md-12 top-column">
 								<a href="/edit-snippet?sid=' . $snippet->ID . '">
-									<div class="name">' . $snippet->Name . '</div>
+									<div class="name" style="background-color: ' . $snippet->getCategory()->getColor() . '">' . $snippet->Name . '</div>
 								</a>
 							</div>
 							<div class="col-md-12 middle-column">
 								<div class="text">
 									' . self::formatText($snippet) . '
 									<div class="overlay"></div>
-									<div class="category">' . $snippet->getCategory()->Name . '</div>
+									<div class="category" style="background-color: ' . $snippet->getCategory()->getColor() . '">' . $snippet->getCategory()->Name . '</div>
 								</div>
 							</div>
 							<div class="col-md-12 tag-column">
 								<div class="tags" title="Tags">
-									' . (trim($snippet->Tags) != "" ? '<span>' : null) . implode("</span><span>", explode(" ", mb_strtolower($snippet->Tags))) . (trim($snippet->Tags) != "" ? '</span>' : null) . '
+									' . (trim($snippet->Tags) != "" ? '<span>' : null) . implode("</span><span>", explode(" ", mb_strtolower($snippet->Tags))) . (trim($snippet->Tags) != "" ? '</span>' : null) . '&nbsp;
 								</div>
 							</div>
 						</div>
@@ -129,26 +144,50 @@ class Snippets extends View {
 		return '
 			<div id="new-snippet">
 				<form>
-					<div class="close-btn" onclick="$(\'#new-snippet\').fadeOut()"><i class="fa fa-times-circle"></i></div>
+					<div class="close-btn"><i class="fa fa-times-circle"></i></div>
 					<h1>Neues Snippet hinzufügen</h1>
-					<div style="padding: 40px;">
-						<br>
-						<h5>Kategorie</h5>
-						<select class="select2" name="category">
-							
-						</select>
-						<br>
-						<br>
-						<input type="text" name="name" placeholder="Name" required>
-						<textarea name="text" placeholder="(new Foo())->bar();"></textarea>
-						<br>
-						<br>
-						<h5>Tags</h5>
-						<select class="select2 tags" multiple></select>
+					<div class="form-body">
+						<div class="form-row">
+							<div class="left-col">
+								<div class="group">
+									<h5>Kategorie</h5>
+									<select style="width: 100% !important;" class="select2" data-placeholder="Kategorie wählen" name="category">
+										' . $this->getCategoryOptions() . '
+									</select>
+								</div>
+								
+								<div class="group">
+									<h5>Name</h5>
+									<input type="text" name="name" placeholder="Mein neuer Schnipsel" required>
+								</div>
+							</div>
+							<div class="right-col">
+								<div class="group">
+									<h5>Code</h5>
+									<textarea name="text" placeholder="(new Foo())->bar();"></textarea>
+								</div>
+							</div>
+						</div>
+						
+						<div class="group">
+							<h5>Tags</h5>
+							<select style="width: 100% !important;" class="select2 tags" name="tags" multiple></select>
+						</div>
+						
 						<button type="submit" class="btn btn-primary">Speichern</button>
 					</div>
 				</form>
 			</div>
 		';
+	}
+
+	protected function getCategoryOptions() {
+		$output = array();
+		$categories = Categories::get();
+
+		foreach ($categories as $category)
+			$output[] = '<option value="' . $category->ID . '">' . $category->Name . '</option>';
+
+		return implode(PHP_EOL, $output);
 	}
 }

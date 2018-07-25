@@ -44,11 +44,11 @@
           box-shadow: 0 10px 10px rgba(0,0,0,0.1);
           position: relative;
           z-index: 1;
-          color: @white;
+          color: inherit;
           text-decoration: none;
         }
         a {
-          color: @white;
+          color: inherit;
           text-decoration: none;
           &:active, &:visited, &:focus {
             text-decoration: none;
@@ -122,6 +122,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0,0.6);
+  display: none;
   form {
     position: fixed;
     top: 50%;
@@ -131,8 +132,8 @@
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 600px;
+    width: auto;
+    min-width: 600px;
     box-shadow: 0 0 50px rgba(0,0,0,0.8);
     background-color: darken(@darkGrey, 10%);
     & > h1 {
@@ -142,37 +143,58 @@
       background-color: @red;
       font-size: 20px;
     }
-    & > div > input {
-      background-color: inherit;
-      border: none;
-      color: @lightGrey;
-      border-bottom: 2px solid @lightGrey;
-      width: 100%;
-      -webkit-transition: all 150ms;
-      -moz-transition: all 150ms;
-      -ms-transition: all 150ms;
-      -o-transition: all 150ms;
-      transition: all 150ms;
-      &:focus {
-        border-color: @red;
+    .form-body {
+      padding: 40px;
+      .form-row {
+        margin: 0 -15px;
+        .left-col, .right-col {
+          float: left;
+          padding: 0 15px;
+          box-sizing: border-box;
+        }
+        .left-col {
+          width: 350px
+        }
+        .right-col {
+          width: ~"calc(100% - 350px)";
+        }
       }
     }
-    textarea {
-      resize: vertical;
-      background-color: inherit;
-      border: 2px solid @lightGrey;
-      color: @lightGrey;
-      min-height: 100px;
-      width: 100%;
-      padding: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2) inset;
-      -webkit-transition: all 150ms;
-      -moz-transition: all 150ms;
-      -ms-transition: all 150ms;
-      -o-transition: all 150ms;
-      transition: all 150ms;
-      &:focus {
-        border-color: @red;
+    .group {
+      margin-bottom: 15px;
+      & > input {
+        background-color: inherit;
+        color: @lightGrey;
+        border: 2px solid @lightGrey;
+        width: 100%;
+        padding: 6px 10px;
+        -webkit-transition: all 150ms;
+        -moz-transition: all 150ms;
+        -ms-transition: all 150ms;
+        -o-transition: all 150ms;
+        transition: all 150ms;
+        &:focus {
+          border-color: @red;
+        }
+      }
+      textarea {
+        resize: vertical;
+        width: 500px;
+        height: 160px;
+        min-height: 160px;
+        background-color: inherit;
+        border: 2px solid @lightGrey;
+        color: @lightGrey;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2) inset;
+        -webkit-transition: all 150ms;
+        -moz-transition: all 150ms;
+        -ms-transition: all 150ms;
+        -o-transition: all 150ms;
+        transition: all 150ms;
+        &:focus {
+          border-color: @red;
+        }
       }
     }
     .btn.btn-primary {
@@ -181,9 +203,6 @@
     }
     .select2 {
       width: 100%;
-    }
-    & > div > input, textarea, .select2 {
-      margin-bottom: 20px;
     }
     .close-btn {
       position: absolute;
@@ -262,4 +281,25 @@
   background-color: @lightGrey !important;
   color: @darkGrey;
   border: none !important;
+}
+
+.add-snippet {
+  color: @white;
+  border: 2px solid @red;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  background-color: @red;
+  padding: 6px 15px;
+  display: inline-block;
+  float: right;
+  cursor: pointer;
+  -webkit-transition: all 150ms;
+  -moz-transition: all 150ms;
+  -ms-transition: all 150ms;
+  -o-transition: all 150ms;
+  transition: all 150ms;
+  &:hover {
+    background-color: transparent;
+    color: @lightGrey;
+  }
 }
