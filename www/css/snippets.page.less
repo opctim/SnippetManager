@@ -21,6 +21,7 @@
     display: none;
   }
 }
+
 #snippet-list {
   margin: 50px 0;
   .snippet {
@@ -86,7 +87,6 @@
             right: 0;
             padding: 0 5px;
             font-size: 10px;
-            font-weight: 200;
             color: @white;
           }
         }
@@ -218,71 +218,6 @@
   }
 }
 
-
-.select2-container {
-  .select2-selection--single, .select2-selection--multiple {
-    border-radius: 0;
-    border: 2px solid @lightGrey !important;
-    background-color: transparent;
-    color: @lightGrey;
-    height: auto;
-    padding: 2px;
-    .select2-selection__rendered {
-      color: @lightGrey;
-    }
-    .select2-selection__arrow {
-      top: 4px;
-    }
-  }
-  &.select2-container--open {
-    .select2-selection--single, .select2-selection--multiple {
-      border-color: @red !important;
-      border-width: 2px;
-    }
-  }
-}
-.select2-dropdown {
-  background-color: darken(@darkGrey, 10%);
-  color: @lightGrey;
-  border-radius: 0;
-  border-width: 2px;
-  border-color: @red;
-  .select2-search__field {
-    transition: all 150ms;
-    padding: 6px;
-    font-weight: 300;
-    border: 2px solid @lightGrey !important;
-    color: @lightGrey;
-    background-color: transparent;
-    &:focus {
-      border-color: @red !important;
-    }
-  }
-  .select2-results__options {
-    .select2-results__option {
-      &[aria-selected="true"] {
-        background-color: @red;
-        color: @white;
-      }
-      &.select2-results__option--highlighted:not([aria-selected="true"]) {
-        background-color: darken(@darkGrey, 10%);
-        color: @red;
-      }
-    }
-  }
-}
-.select2-container--default .select2-results > .select2-results__options {
-  max-height: 300px;
-}
-.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
-  background-color: darken(@darkGrey, 10%);
-}
-.select2-selection__choice {
-  background-color: @lightGrey !important;
-  color: @darkGrey;
-  border: none !important;
-}
-
 .add-snippet {
   color: @white;
   border: 2px solid @red;
@@ -301,5 +236,93 @@
   &:hover {
     background-color: transparent;
     color: @lightGrey;
+  }
+}
+
+#context-menu {
+  display: none;
+  position: absolute;
+  background-color: @darkGrey;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  z-index: 999;
+  padding: 3px 0;
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    li {
+      text-align: left;
+      padding: 6px 15px;
+      font-size: 16px;
+      font-weight: 200;
+      cursor: pointer;
+      background-color: darken(@darkGrey, 5%);
+      .fa {
+        width: 25px;
+      }
+      &:not(:last-child) {
+        margin-bottom: 3px;
+      }
+      &:hover {
+        background-color: @red;
+      }
+    }
+  }
+}
+
+#delete-confirm {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  display: none;
+  .panel {
+    max-width: 400px;
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    background-color: darken(@darkGrey, 10%);
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    & > h1 {
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background-color: @red;
+      font-size: 20px;
+    }
+    .body {
+      padding: 40px;
+      & > .row {
+        .col-md-6 {
+          padding: 0 20px;
+          button {
+            width: 100%;
+            color: @white;
+            background-color: @red;
+            border: 2px solid @red;
+            -webkit-transition: all 150ms;
+            -moz-transition: all 150ms;
+            -ms-transition: all 150ms;
+            -o-transition: all 150ms;
+            transition: all 150ms;
+            &:hover {
+              color: @red;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
   }
 }

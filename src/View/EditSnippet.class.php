@@ -7,7 +7,16 @@
 
 namespace SnippetManager\View;
 
+use SnippetManager\Model\Snippet;
+
+
 class EditSnippet extends View {
+	protected $snippet;
+
+	public function __construct($id) {
+		$this->snippet = \SnippetManager\Model\Snippets::get($id);
+	}
+
 	public static function getTitle(): string {
 		return "Snippet bearbeiten";
 	}

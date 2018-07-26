@@ -71,4 +71,14 @@ class Snippet {
 
 		return new Snippet($stdClass);
 	}
+
+	public static function delete($id) {
+		$db = Database::getInstance();
+
+		$id = $db->real_escape_string($id);
+
+		$db->query("DELETE FROM snippet WHERE SNIPPET_ID = $id");
+
+		return $db->affected_rows > 0;
+	}
 }

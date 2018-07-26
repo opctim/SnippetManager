@@ -24,6 +24,7 @@ class Snippets extends View {
 
 		$this->parent->addCssFiles([
 			"select2css"	=> "lib/Select2/select2.min.css",
+			"select2-style"	=> "css/select2.style.css",
 			"snippets-css"	=> "css/snippets.page.css",
 		]);
 
@@ -49,12 +50,24 @@ class Snippets extends View {
 	}
 
 	public function getBody(): string {
+		$searchTerm = null;
+
+		if (isset($_SESSION["_sm_enqueued_search"])) {
+			$searchTerm = $_SESSION["_sm_enqueued_search"];
+
+			$searchTerm = htmlspecialchars($searchTerm);
+
+			unset($_SESSION["_sm_enqueued_search"]);
+		}
+
+		$snippets = \SnippetManager\Model\Snippets::get(null, $searchTerm);
+
 		return '
-			<h1>' . $this->getTitle() . '</h1>
+			<h1>' . $this->getTitle() . ' <small>(<span id="snippet-count">' . count($snippets) . '</span>)</small></h1>
 			<div class="row">
 				<div class="col-md-8">
 					<div class="search-wrapper">
-						<input type="text" id="search-field" placeholder="Suchen..." autofocus>
+						<input type="text" id="search-field" placeholder="Suchen..." value="' . $searchTerm . '" autofocus>
 						<i class="fa fa-spinner fa-spin"></i>
 					</div>
 				</div>
@@ -63,9 +76,30 @@ class Snippets extends View {
 				</div>
 			</div>
 			<div id="snippet-list">
-				' . $this->renderSnippets(\SnippetManager\Model\Snippets::get()) . '
+				' . $this->renderSnippets($snippets) . '
 			</div>
 			' . $this->getAddSnippetPopup() . '
+			<div id="context-menu">
+				<ul>
+					<li class="edit"><i class="fa fa-wrench"></i> Bearbeiten</a></li>
+					<li class="delete"><i class="fa fa-trash"></i> Löschen</li>
+				</ul>
+			</div>
+			<div id="delete-confirm">
+				<div class="panel">
+					<h1>Bist du sicher?</h1>
+					<div class="body">
+						<div class="row">
+							<div class="col-md-6">
+								<button class="yes">Ja</button>
+							</div>
+							<div class="col-md-6">
+								<button class="no">Nein</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		';
 	}
 
@@ -82,23 +116,25 @@ class Snippets extends View {
 			$textColor = "#ffffff";
 			$difference = self::luminosityDifference($textColor, $snippet->getCategory()->getColor());
 
-			if ($difference < 5)
+			if ($difference < 3)
 				$textColor = "#000000";
+
+			$snippet->Tags = htmlspecialchars($snippet->Tags);
 
 			$output[] = '
 				<div class="col-md-4">
-					<div class="snippet" style="color: ' . $textColor . ';">
+					<div class="snippet" data-sid="' . $snippet->ID . '" style="color: ' . $textColor . ';">
 						<div class="row">
 							<div class="col-md-12 top-column">
-								<a href="/edit-snippet?sid=' . $snippet->ID . '">
-									<div class="name" style="background-color: ' . $snippet->getCategory()->getColor() . '">' . $snippet->Name . '</div>
+								<a title="Bearbeiten" class="edit-link" href="/edit-snippet?sid=' . $snippet->ID . '">
+									<div class="name" style="background-color: ' . $snippet->getCategory()->getColor() . '">' . htmlspecialchars($snippet->Name) . '</div>
 								</a>
 							</div>
 							<div class="col-md-12 middle-column">
 								<div class="text">
 									' . self::formatText($snippet) . '
 									<div class="overlay"></div>
-									<div class="category" style="background-color: ' . $snippet->getCategory()->getColor() . '">' . $snippet->getCategory()->Name . '</div>
+									<div class="category" style="color: ' . $textColor . ';background-color: ' . $snippet->getCategory()->getColor() . '">' . $snippet->getCategory()->Name . '</div>
 								</div>
 							</div>
 							<div class="col-md-12 tag-column">

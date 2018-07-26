@@ -111,6 +111,10 @@ body {
   padding: 15px 50px 15px 80px;
   box-sizing: border-box;
 }
+.outer-wrapper .content h1 small {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
 .btn.btn-primary {
   background-color: #d60d31;
   color: #fff;

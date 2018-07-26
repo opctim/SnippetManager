@@ -89,7 +89,7 @@ $(document).ready(function(){
         $.ajax({
             url: "index.php",
             data: {
-                newsnippet: {
+                newSnippet: {
                     categoryId: form.find(':input[name="category"]').val(),
                     name: form.find(':input[name="name"]').val(),
                     text: form.find(':input[name="text"]').val(),
@@ -131,7 +131,102 @@ $(document).ready(function(){
 
                 if (typeof done !== "undefined")
                     done();
+
+                $("#snippet-count").html(snippetList.find(".snippet").length);
             }
         });
     }
+
+    if (document.addEventListener) {
+        document.addEventListener("contextmenu", function(e) {
+            if ($(e.target).parents(".snippet").length > 0) {
+                onContextMenuRequested(e);
+                e.preventDefault();
+            }
+        }, false);
+    }
+    else {
+        document.attachEvent("oncontextmenu", function() {
+            if ($(window.event.target).parents(".snippet").length > 0) {
+                onContextMenuRequested(window.event);
+                window.event.returnValue = false;
+            }
+        });
+    }
+
+    var contextMenuActiveElement = null;
+
+    function onContextMenuRequested(e) {
+        $("#context-menu").css({
+            top: e.clientY,
+            left: e.clientX
+        }).fadeIn();
+
+        contextMenuActiveElement = $(e.target).parents(".snippet");
+    }
+
+    var contextMenu = $("#context-menu");
+
+    contextMenu.on("click", function(e){
+        e.stopPropagation();
+    });
+
+    $(document).on("click", function(){
+        var contextMenu = $("#context-menu");
+
+        if (contextMenu.is(":visible"))
+            contextMenu.hide();
+    });
+
+    contextMenu.find("li").click(function(){
+        contextMenu.hide();
+
+        if (contextMenuActiveElement !== null) {
+            if ($(this).hasClass("edit")) {
+                location.href = contextMenuActiveElement.find(".edit-link").prop("href");
+            }
+            else if ($(this).hasClass("delete")) {
+                var deleteConfirm = $("#delete-confirm");
+
+                deleteConfirm.css({
+                    filter: "none",
+                    opacity: "1"
+                });
+                deleteConfirm.fadeIn();
+
+                deleteConfirm.find("button").one("click", function(e){
+                    e.preventDefault();
+
+                    if ($(this).hasClass("yes")) {
+                        deleteConfirm.css({
+                            filter: "blur(5px)",
+                            opacity: "0.75"
+                        });
+
+                        $.ajax({
+                            url: "index.php",
+                            data: {
+                                deleteSnippet: contextMenuActiveElement.data("sid")
+                            },
+                            success: function(response){
+                                reloadSnippets(function(){
+                                    deleteConfirm.fadeOut();
+
+                                    deleteConfirm.css({
+                                        filter: "none",
+                                        opacity: "1"
+                                    });
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        deleteConfirm.fadeOut();
+                    }
+
+                    return false;
+                });
+            }
+        }
+    });
 });

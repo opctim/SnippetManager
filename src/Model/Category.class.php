@@ -44,4 +44,36 @@ class Category {
 
 		return $db->affected_rows > 0;
 	}
+
+	public static function create($name, $description, $color) {
+		$db = Database::getInstance();
+
+		$name = $db->real_escape_string($name);
+		$description = $db->real_escape_string($description);
+		$color = $db->real_escape_string($color);
+
+		$db->query("INSERT INTO category(CATEGORY_NAME, CATEGORY_DESCRIPTION, CATEGORY_COLOR) VALUES('$name', '$description', '$color')");
+
+		if ($db->insert_id == 0)
+			return false;
+
+		$databaseData = new \stdClass();
+
+		$databaseData->CATEGORY_ID = $db->insert_id;
+		$databaseData->CATEGORY_NAME = $name;
+		$databaseData->CATEGORY_DESCRIPTION = $description;
+		$databaseData->CATEGORY_COLOR = $color;
+
+		return new Category($databaseData);
+	}
+
+	public static function delete($id) {
+		$db = Database::getInstance();
+
+		$id = $db->real_escape_string($id);
+
+		$db->query("DELETE FROM category WHERE CATEGORY_ID = $id");
+
+		return $db->affected_rows > 0;
+	}
 }
