@@ -17,7 +17,6 @@ class EditCategory extends View {
 	public function init() {
 		$this->parent->addJavaScriptFiles([
 			"iro-js"			=> "lib/iro.js/iro.min.js",
-			"categories-main"	=> "js/categories.js",
 		]);
 
 		$this->parent->addCssFiles([
@@ -35,6 +34,10 @@ class EditCategory extends View {
 				   	
 				   	colorPicker.on("color:change", function(color){
 						$("#color-picker-input").val(color.hexString);
+						
+						$("#color-picker").css({
+							"border-color": color.hexString
+						});
 					});
 				});
 			</script>
@@ -50,13 +53,15 @@ class EditCategory extends View {
 			<h1>' . $this->getTitle() . '</h1>
 			<br>
 			<br>
-			<form action="/categories" method="post" id="edit-category">
+			<form action="' . SM_FULL_URL . '" method="post" id="edit-category">
+				<input type="hidden" name="editFormSubmit" value="1">
+				<input type="hidden" name="cid" value="' . $this->category->ID . '">
 				<div class="form-body">
 					<div class="row">
 						<div class="col-md-8">
 							<div class="group">
 								<h5>Name</h5>
-								<input type="text" style="max-width: 300px" name="name" value="' . $this->category->Name . '" placeholder="Meine neue Kategorie" required>
+								<input type="text" name="name" value="' . $this->category->Name . '" placeholder="Meine neue Kategorie" required>
 							</div>
 							<br>
 							<div class="group">
@@ -65,7 +70,8 @@ class EditCategory extends View {
 							</div>
 						</div>
 						<div class="col-md-4">
-							<div id="color-picker" class="pull-right"></div>
+							<h5>Farbe wählen</h5>
+							<div id="color-picker"></div>
 							<input type="hidden" name="color" id="color-picker-input" value="' . $this->category->getColor() . '">
 						</div>
 					</div>

@@ -81,6 +81,7 @@ class Snippets extends View {
 			' . $this->getAddSnippetPopup() . '
 			<div id="context-menu">
 				<ul>
+					<li class="copy"><i class="fa fa-copy"></i> Kopieren</a></li>
 					<li class="edit"><i class="fa fa-wrench"></i> Bearbeiten</a></li>
 					<li class="delete"><i class="fa fa-trash"></i> Löschen</li>
 				</ul>
@@ -99,6 +100,9 @@ class Snippets extends View {
 						</div>
 					</div>
 				</div>
+			</div>
+			<div id="copied-info">
+				Kopiert!
 			</div>
 		';
 	}
@@ -133,7 +137,7 @@ class Snippets extends View {
 							<div class="col-md-12 middle-column">
 								<div class="text">
 									' . self::formatText($snippet) . '
-									<div class="overlay"></div>
+									<div class="overlay" title="Zum kopieren klicken"></div>
 									<div class="category" style="color: ' . $textColor . ';background-color: ' . $snippet->getCategory()->getColor() . '">' . $snippet->getCategory()->Name . '</div>
 								</div>
 							</div>

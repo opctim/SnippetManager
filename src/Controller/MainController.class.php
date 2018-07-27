@@ -93,6 +93,19 @@ class MainController {
 			});
 
 			$menu->registerMenuItem("/edit-snippet", EditSnippet::getTitle(), null, function() use ($document) {
+				if (isset($_REQUEST["editFormSubmit"])) {
+					$snippet = \SnippetManager\Model\Snippets::get($_REQUEST["sid"]);
+
+					$snippet->CategoryId = $_REQUEST["category"];
+					$snippet->Name = $_REQUEST["name"];
+					$snippet->Text = $_REQUEST["text"];
+					$snippet->Tags = $_REQUEST["tags"];
+
+					$snippet->writeToDatabase();
+
+					Redirect::target("/");
+				}
+
 				if (empty($_REQUEST["sid"]))
 					Redirect::target("/");
 
@@ -104,6 +117,18 @@ class MainController {
 			});
 
 			$menu->registerMenuItem("/edit-category", EditCategory::getTitle(), null, function() use ($document) {
+				if (isset($_REQUEST["editFormSubmit"])) {
+					$category = \SnippetManager\Model\Categories::get($_REQUEST["cid"]);
+
+					$category->Name = $_REQUEST["name"];
+					$category->Description = $_REQUEST["description"];
+					$category->Color = $_REQUEST["color"];
+
+					$category->writeToDatabase();
+
+					Redirect::target("/categories");
+				}
+
 				if (empty($_REQUEST["cid"]))
 					Redirect::target("/");
 

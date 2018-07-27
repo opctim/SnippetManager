@@ -36,6 +36,8 @@ class Categories extends View {
 				   	
 				   	colorPicker.on("color:change", function(color){
 						$("#color-picker-input").val(color.hexString);
+						
+						$("#color-picker").css("border-color", color.hexString);
 					});
 				});
 			</script>
@@ -137,8 +139,11 @@ class Categories extends View {
 									<input type="text" name="name" placeholder="Meine neue Kategorie" required>
 								</div>
 								
-								<div id="color-picker"></div>
-								<input type="hidden" name="color" id="color-picker-input">
+								<div class="group">
+									<h5>Farbe wählen</h5>
+									<div id="color-picker"></div>
+									<input type="hidden" name="color" id="color-picker-input">
+								</div>
 							</div>
 							<div class="right-col">
 								<div class="group">

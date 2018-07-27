@@ -35,7 +35,7 @@ class Document {
 	<body>
 		<div class="outer-wrapper">
 			<div class="sidebar">
-				<h1 class="logo"><i class="fa fa-sticky-note"></i> SnippetManager<small>v1</small></h1>
+				<a style="display: block; text-decoration: none !important;" href="/"><h1 class="logo"><i class="fa fa-sticky-note"></i> SnippetManager<small>v1</small></h1></a>
 				<ul class="nav">
 				' . $this->menu->renderMenuItems() . '
 				</ul>

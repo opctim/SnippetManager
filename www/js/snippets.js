@@ -5,8 +5,10 @@
  */
 
 
-$(document).ready(function(){
-    $(document).on("click", "pre", function(){
+$(document).ready(function () {
+    var copiedInfo = $("#copied-info");
+
+    $(document).on("click", "pre", function () {
         var range;
 
         if (this.select) {
@@ -22,9 +24,33 @@ $(document).ready(function(){
             range.selectNode(this);
             window.getSelection().addRange(range);
         }
+
+        document.execCommand("copy");
+
+        if (window.getSelection) {
+            if (window.getSelection().empty) {
+                window.getSelection().empty();
+            }
+            else if (window.getSelection().removeAllRanges) {
+                window.getSelection().removeAllRanges();
+            }
+        }
+        else if (document.selection) {
+            document.selection.empty();
+        }
+
+        copiedInfo.addClass("visible");
+
+        setTimeout(function () {
+            copiedInfo.removeClass("visible");
+        }, 1500);
     });
 
-    $(document).on("click", "pre ~ .overlay", function(){
+    copiedInfo.click(function () {
+        $(this).removeClass("visible");
+    });
+
+    $(document).on("click", "pre ~ .overlay", function () {
         $(this).siblings("pre").trigger("click");
     });
 
@@ -35,18 +61,18 @@ $(document).ready(function(){
 
     var timeout = null;
 
-    searchField.keyup(function(){
+    searchField.keyup(function () {
         if (timeout !== null)
             clearTimeout(timeout);
 
         var $this = $(this);
 
-        timeout = setTimeout(function(){
+        timeout = setTimeout(function () {
             var spinner = $this.siblings(".fa");
 
             spinner.show();
 
-            reloadSnippets(function(){
+            reloadSnippets(function () {
                 spinner.hide();
             });
         }, 600);
@@ -64,7 +90,7 @@ $(document).ready(function(){
         form.get(0).reset();
     }
 
-    newSnippetElement.find("form .close-btn").click(function(){
+    newSnippetElement.find("form .close-btn").click(function () {
         var form = $(this).parent("form");
 
         $("#new-snippet").fadeOut();
@@ -72,11 +98,11 @@ $(document).ready(function(){
         resetNewSnippetForm();
     });
 
-    $(".add-snippet").click(function(){
+    $(".add-snippet").click(function () {
         $("#new-snippet").fadeIn();
     });
 
-    newSnippetElement.submit(function(e){
+    newSnippetElement.submit(function (e) {
         e.preventDefault();
 
         var form = newSnippetElement.find("form");
@@ -96,8 +122,8 @@ $(document).ready(function(){
                     tags: form.find(':input[name="tags"]').val().join(" ")
                 }
             },
-            success: function(response){
-                reloadSnippets(function(){
+            success: function (response) {
+                reloadSnippets(function () {
                     newSnippetElement.fadeOut();
                     resetNewSnippetForm();
 
@@ -120,7 +146,7 @@ $(document).ready(function(){
             data: {
                 snippets: $("#search-field").val()
             },
-            success: function(html){
+            success: function (html) {
                 var snippetList = $("#snippet-list");
 
                 if (html !== lastHtml) {
@@ -138,7 +164,7 @@ $(document).ready(function(){
     }
 
     if (document.addEventListener) {
-        document.addEventListener("contextmenu", function(e) {
+        document.addEventListener("contextmenu", function (e) {
             if ($(e.target).parents(".snippet").length > 0) {
                 onContextMenuRequested(e);
                 e.preventDefault();
@@ -146,7 +172,7 @@ $(document).ready(function(){
         }, false);
     }
     else {
-        document.attachEvent("oncontextmenu", function() {
+        document.attachEvent("oncontextmenu", function () {
             if ($(window.event.target).parents(".snippet").length > 0) {
                 onContextMenuRequested(window.event);
                 window.event.returnValue = false;
@@ -167,22 +193,25 @@ $(document).ready(function(){
 
     var contextMenu = $("#context-menu");
 
-    contextMenu.on("click", function(e){
+    contextMenu.on("click", function (e) {
         e.stopPropagation();
     });
 
-    $(document).on("click", function(){
+    $(document).on("click", function () {
         var contextMenu = $("#context-menu");
 
         if (contextMenu.is(":visible"))
             contextMenu.hide();
     });
 
-    contextMenu.find("li").click(function(){
+    contextMenu.find("li").click(function () {
         contextMenu.hide();
 
         if (contextMenuActiveElement !== null) {
-            if ($(this).hasClass("edit")) {
+            if ($(this).hasClass("copy")) {
+                contextMenuActiveElement.find("pre").trigger("click");
+            }
+            else if ($(this).hasClass("edit")) {
                 location.href = contextMenuActiveElement.find(".edit-link").prop("href");
             }
             else if ($(this).hasClass("delete")) {
@@ -194,7 +223,7 @@ $(document).ready(function(){
                 });
                 deleteConfirm.fadeIn();
 
-                deleteConfirm.find("button").one("click", function(e){
+                deleteConfirm.find("button").one("click", function (e) {
                     e.preventDefault();
 
                     if ($(this).hasClass("yes")) {
@@ -208,8 +237,8 @@ $(document).ready(function(){
                             data: {
                                 deleteSnippet: contextMenuActiveElement.data("sid")
                             },
-                            success: function(response){
-                                reloadSnippets(function(){
+                            success: function (response) {
+                                reloadSnippets(function () {
                                     deleteConfirm.fadeOut();
 
                                     deleteConfirm.css({

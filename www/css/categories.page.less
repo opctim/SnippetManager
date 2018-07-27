@@ -116,8 +116,8 @@
       textarea {
         resize: vertical;
         width: 500px;
-        height: 160px;
-        min-height: 160px;
+        height: 308px;
+        min-height: 200px;
         background-color: inherit;
         border: 2px solid @lightGrey;
         color: @lightGrey;
@@ -139,6 +139,13 @@
     }
     .select2 {
       width: 100%;
+    }
+    #color-picker {
+      padding: 15px;
+      border: 2px solid @lightGrey;
+      svg {
+        margin: 0 auto;
+      }
     }
     .close-btn {
       position: absolute;
@@ -292,8 +299,8 @@
     textarea {
       resize: vertical;
       width: 100%;
-      height: 160px;
-      min-height: 160px;
+      height: 222px;
+      min-height: 200px;
       background-color: inherit;
       border: 2px solid @lightGrey;
       color: @lightGrey;
@@ -307,6 +314,13 @@
       &:focus {
         border-color: @red;
       }
+    }
+  }
+  #color-picker {
+    padding: 15px;
+    border: 2px solid @lightGrey;
+    svg {
+      margin: 0 auto;
     }
   }
   .btn.btn-primary {

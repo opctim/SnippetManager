@@ -72,6 +72,7 @@
   -moz-border-radius: 0;
   border-radius: 0;
   overflow: hidden;
+  cursor: pointer;
 }
 #snippet-list .snippet > .row .middle-column .text .overlay {
   position: absolute;
@@ -79,6 +80,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  cursor: pointer;
   box-shadow: 0 -10px 25px #222222 inset;
 }
 #snippet-list .snippet > .row .middle-column .text .category {
@@ -315,4 +317,122 @@
 #delete-confirm .panel .body > .row .col-md-6 button:hover {
   color: #d60d31;
   background-color: transparent;
+}
+#edit-snippet form > h1 {
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+  background-color: #d60d31;
+  font-size: 20px;
+}
+#edit-snippet form .form-body {
+  padding: 40px;
+}
+#edit-snippet form .form-body .form-row {
+  margin: 0 -15px;
+}
+#edit-snippet form .form-body .form-row .left-col,
+#edit-snippet form .form-body .form-row .right-col {
+  float: left;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+#edit-snippet form .form-body .form-row .left-col {
+  width: 350px;
+}
+#edit-snippet form .form-body .form-row .right-col {
+  width: calc(100% - 350px);
+}
+#edit-snippet form .group {
+  margin-bottom: 15px;
+}
+#edit-snippet form .group > input {
+  background-color: inherit;
+  color: #f2f2f2;
+  border: 2px solid #f2f2f2;
+  width: 100%;
+  padding: 6px 10px;
+  -webkit-transition: all 150ms;
+  -moz-transition: all 150ms;
+  -ms-transition: all 150ms;
+  -o-transition: all 150ms;
+  transition: all 150ms;
+}
+#edit-snippet form .group > input:focus {
+  border-color: #d60d31;
+}
+#edit-snippet form .group textarea {
+  resize: vertical;
+  width: 500px;
+  height: 160px;
+  min-height: 160px;
+  background-color: inherit;
+  border: 2px solid #f2f2f2;
+  color: #f2f2f2;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2) inset;
+  -webkit-transition: all 150ms;
+  -moz-transition: all 150ms;
+  -ms-transition: all 150ms;
+  -o-transition: all 150ms;
+  transition: all 150ms;
+}
+#edit-snippet form .group textarea:focus {
+  border-color: #d60d31;
+}
+#edit-snippet form .btn.btn-primary {
+  margin-top: 20px;
+  width: 100%;
+}
+#edit-snippet form .select2 {
+  width: 100%;
+}
+#edit-snippet form .close-btn {
+  position: absolute;
+  top: -30px;
+  right: -23px;
+  color: #f2f2f2;
+  cursor: pointer;
+  font-size: 19px;
+}
+#edit-snippet form .close-btn:hover {
+  color: #d60d31;
+}
+#edit-snippet .select2-dropdown {
+  background-color: transparent;
+}
+#edit-snippet .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--highlighted:not([aria-selected="true"]) {
+  background-color: transparent;
+  color: #d60d31;
+}
+#edit-snippet .select2-container--default .select2-selection--single,
+#edit-snippet .select2-container--default .select2-selection--multiple {
+  background-color: transparent;
+}
+#copied-info {
+  background-color: #d60d31;
+  color: #fff;
+  padding: 10px 60px;
+  font-size: 20px;
+  font-weight: 200;
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: -300px;
+  left: 50%;
+  display: table;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
+  -webkit-transition: all 600ms;
+  -moz-transition: all 600ms;
+  -ms-transition: all 600ms;
+  -o-transition: all 600ms;
+  transition: all 600ms;
+}
+#copied-info.visible {
+  top: 50px;
 }

@@ -14,6 +14,7 @@ class Snippet {
 	protected $internalId;
 
 	public $ID = null;
+	public $CategoryId = null;
 	public $Name = null;
 	public $Text = null;
 	public $Tags = null;
@@ -24,6 +25,7 @@ class Snippet {
 		$this->internalId = $databaseData->SNIPPET_ID;
 
 		$this->ID = $databaseData->SNIPPET_ID;
+		$this->CategoryId = $databaseData->CATEGORY_ID;
 		$this->Name = $databaseData->SNIPPET_NAME;
 		$this->Text = $databaseData->SNIPPET_TEXT;
 		$this->Tags = $databaseData->SNIPPET_TAGS;
@@ -37,11 +39,15 @@ class Snippet {
 	public function writeToDatabase() {
 		$db = Database::getInstance();
 
+		if (is_array($this->Tags))
+			$this->Tags = implode(" ", $this->Tags);
+
+		$categoryId = $db->real_escape_string($this->CategoryId);
 		$snippetName = $db->real_escape_string($this->Name);
 		$snippetText = $db->real_escape_string($this->Text);
 		$snippetTags = $db->real_escape_string($this->Tags);
 
-		$db->query("UPDATE snippet SET SNIPPET_NAME = '$snippetName', SNIPPET_TEXT = '$snippetText', SNIPPET_TAGS = '$snippetTags' WHERE SNIPPET_ID = " . $this->internalId);
+		$db->query("UPDATE snippet SET CATEGORY_ID = '$categoryId', SNIPPET_NAME = '$snippetName', SNIPPET_TEXT = '$snippetText', SNIPPET_TAGS = '$snippetTags' WHERE SNIPPET_ID = " . $this->internalId);
 
 		return $db->affected_rows > 0;
 	}
