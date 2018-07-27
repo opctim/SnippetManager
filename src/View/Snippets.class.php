@@ -137,7 +137,7 @@ class Snippets extends View {
 							<div class="col-md-12 middle-column">
 								<div class="text">
 									' . self::formatText($snippet) . '
-									<div class="overlay" title="Zum kopieren klicken"></div>
+									<div class="overlay" title="Zum Kopieren klicken"></div>
 									<div class="category" style="color: ' . $textColor . ';background-color: ' . $snippet->getCategory()->getColor() . '">' . $snippet->getCategory()->Name . '</div>
 								</div>
 							</div>
