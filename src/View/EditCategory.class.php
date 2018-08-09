@@ -61,11 +61,11 @@ class EditCategory extends View {
 		');
 	}
 
-	public static function getTitle(): string {
+	public static function getTitle() {
 		return "Kategorie bearbeiten";
 	}
 
-	public function getBody(): string {
+	public function getBody() {
 		return '
 			<h1>' . $this->getTitle() . '</h1>
 			<br>

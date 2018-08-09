@@ -15,9 +15,9 @@ abstract class View {
 		$this->parent = $parent;
 	}
 
-	abstract public static function getTitle(): string;
+	abstract public static function getTitle();
 
-	abstract public function getBody(): string;
+	abstract public function getBody();
 
 	/**
 	 * @param string $color1

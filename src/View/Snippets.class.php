@@ -12,7 +12,7 @@ use SnippetManager\Model\Categories;
 use SnippetManager\Model\Snippet;
 
 class Snippets extends View {
-	public static function getTitle(): string {
+	public static function getTitle() {
 		return "Snippets";
 	}
 
@@ -49,7 +49,7 @@ class Snippets extends View {
 		');
 	}
 
-	public function getBody(): string {
+	public function getBody() {
 		$searchTerm = null;
 
 		if (isset($_SESSION["_sm_enqueued_search"])) {

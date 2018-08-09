@@ -11,7 +11,7 @@ use SnippetManager\Model\Category;
 
 
 class Categories extends View {
-	public static function getTitle(): string {
+	public static function getTitle() {
 		return "Kategorien";
 	}
 
@@ -61,7 +61,7 @@ class Categories extends View {
 		');
 	}
 
-	public function getBody(): string {
+	public function getBody() {
 		$categories = \SnippetManager\Model\Categories::get();
 
 		return '
