@@ -20,6 +20,7 @@
 }
 #category-list .category-link {
   display: block;
+  margin-bottom: 30px;
   text-decoration: none;
 }
 #category-list .category-link:active,
@@ -138,7 +139,7 @@
   width: 100%;
 }
 #new-category form .select2 {
-  width: 100%;
+  width: 100% !important;
 }
 #new-category form #color-picker {
   padding: 15px;
@@ -331,4 +332,8 @@
 }
 #edit-category .close-btn:hover {
   color: #d60d31;
+}
+#edit-category .select2-container--default .select2-selection--single,
+#edit-category #edit-snippet .select2-container--default .select2-selection--multiple {
+  background-color: transparent;
 }

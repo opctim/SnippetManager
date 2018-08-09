@@ -42,6 +42,15 @@ class Database extends \mysqli {
 		return new Result($this);
 	}
 
+	public function escapeAddQuotesOrSetNull($string) {
+		$string = $this->real_escape_string($string);
+
+		if (empty($string))
+			return "NULL";
+
+		return "'" . $string . "'";
+	}
+
 	/** @return bool | Result */
 	public function handleResult($result) {
 		if (!$result)

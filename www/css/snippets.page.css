@@ -15,9 +15,14 @@
 }
 .search-wrapper .fa {
   position: absolute;
-  right: 5px;
+  right: -15px;
   top: 3px;
   display: none;
+}
+.search-wrapper .clear-field {
+  right: 5px;
+  cursor: pointer;
+  color: #222222;
 }
 #snippet-list {
   margin: 50px 0;
@@ -101,7 +106,8 @@
   overflow-y: hidden;
   overflow-x: auto;
 }
-#snippet-list .snippet > .row .tag-column .tags span {
+#snippet-list .snippet > .row .tag-column .tags .tag {
+  cursor: pointer;
   display: inline;
   border: 1px solid #949494;
   margin: 0 3px;
@@ -109,6 +115,16 @@
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   padding: 0 5px;
+  -webkit-transition: all 150ms;
+  -moz-transition: all 150ms;
+  -ms-transition: all 150ms;
+  -o-transition: all 150ms;
+  transition: all 150ms;
+}
+#snippet-list .snippet > .row .tag-column .tags .tag:hover {
+  background-color: #d60d31;
+  color: #fff;
+  border-color: #d60d31;
 }
 #new-snippet {
   z-index: 10;
@@ -435,4 +451,28 @@
 }
 #copied-info.visible {
   top: 50px;
+}
+.categories {
+  padding: 25px 0;
+}
+.categories .category {
+  padding: 10px 25px;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  opacity: 0.85;
+  -webkit-transition: all 150ms;
+  -moz-transition: all 150ms;
+  -ms-transition: all 150ms;
+  -o-transition: all 150ms;
+  transition: all 150ms;
+  max-width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.categories .category:hover {
+  opacity: 1;
 }

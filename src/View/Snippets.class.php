@@ -68,11 +68,17 @@ class Snippets extends View {
 				<div class="col-md-8">
 					<div class="search-wrapper">
 						<input type="text" id="search-field" placeholder="Suchen..." value="' . $searchTerm . '" autofocus>
-						<i class="fa fa-spinner fa-spin"></i>
+						<i class="fa fa-spinner fa-spin spinner"></i>
+						<i class="fa fa-times clear-field"></i>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="add-snippet"><i class="fa fa-plus-circle"></i> Neu</div>
+				</div>
+				<div class="col-md-12">
+					<div class="categories">
+						' . $this->renderCategoryButtons() . '
+					</div>
 				</div>
 			</div>
 			<div id="snippet-list">
@@ -105,6 +111,25 @@ class Snippets extends View {
 				Kopiert!
 			</div>
 		';
+	}
+
+	protected function renderCategoryButtons() {
+		$output = array();
+		$categories = Categories::get();
+
+		foreach ($categories as $category) {
+			$textColor = "#ffffff";
+			$difference = self::luminosityDifference($textColor, $category->getColor());
+
+			if ($difference < 3)
+				$textColor = "#000000";
+
+			$output[] = '
+				<div class="category" style="background-color:' . $category->getColor() . ';color:' . $textColor . ';" data-name="' . $category->Name . '" title="' . $category->Description . '">' . $category->Name . '</div>
+			';
+		}
+
+		return implode(PHP_EOL, $output);
 	}
 
 	/**
@@ -142,8 +167,8 @@ class Snippets extends View {
 								</div>
 							</div>
 							<div class="col-md-12 tag-column">
-								<div class="tags" title="Tags">
-									' . (trim($snippet->Tags) != "" ? '<span>' : null) . implode("</span><span>", explode(" ", mb_strtolower($snippet->Tags))) . (trim($snippet->Tags) != "" ? '</span>' : null) . '&nbsp;
+								<div class="tags">
+									' . self::renderTags($snippet->Tags) . '
 								</div>
 							</div>
 						</div>
@@ -153,6 +178,20 @@ class Snippets extends View {
 		}
 
 		$output[] = '</div>';
+
+		return implode(PHP_EOL, $output);
+	}
+
+	protected static function renderTags($string) {
+		$tags = explode(" ", mb_strtolower($string));
+		$output = array();
+
+		if (trim($string) !== "") {
+			foreach ($tags as $tag)
+				$output[] = '<span class="tag" title="Nach Tag suchen" data-tag="' . $tag . '">' . $tag . '</span>';
+		}
+
+		$output[] = "&nbsp;";
 
 		return implode(PHP_EOL, $output);
 	}

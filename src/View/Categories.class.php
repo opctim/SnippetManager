@@ -17,11 +17,14 @@ class Categories extends View {
 
 	public function init() {
 		$this->parent->addJavaScriptFiles([
+			"select2js"			=> "lib/Select2/select2.min.js",
 			"iro-js"			=> "lib/iro.js/iro.min.js",
 			"categories-main"	=> "js/categories.js",
 		]);
 
 		$this->parent->addCssFiles([
+			"select2css"		=> "lib/Select2/select2.min.css",
+			"select2-style"		=> "css/select2.style.css",
 			"categories-css"	=> "css/categories.page.css",
 		]);
 
@@ -39,6 +42,20 @@ class Categories extends View {
 						
 						$("#color-picker").css("border-color", color.hexString);
 					});
+				   	
+				   	$("select.select2:not(.tags)").each(function(){
+				   	    if (typeof $(this).data("placeholder") !== "undefined")
+				   	    	$(this).select2({
+				   	    		placeholder: $(this).data("placeholder")
+				   	    	});
+				   	    else
+				   	        $(this).select2();
+				   	});
+				   
+				   	$("select.select2.tags").select2({
+				   		tags: true,
+				   		tokenSeparators: [",", " "]
+				   	});
 				});
 			</script>
 		');
@@ -138,11 +155,14 @@ class Categories extends View {
 									<h5>Name</h5>
 									<input type="text" name="name" placeholder="Meine neue Kategorie" required>
 								</div>
-								
+								<div class="group">
+									<h5>Sprache</h5>
+									' . LanguageSelect::render() . '
+								</div>
 								<div class="group">
 									<h5>Farbe wählen</h5>
 									<div id="color-picker"></div>
-									<input type="hidden" name="color" id="color-picker-input">
+									<input type="hidden" name="color" id="color-picker-input" value="' . SM_DEFAULT_CATEGORY_COLOR . '">
 								</div>
 							</div>
 							<div class="right-col">

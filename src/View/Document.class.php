@@ -27,6 +27,21 @@ class Document {
 	}
 
 	public function render() {
+		$easterEgg = null;
+
+		if (SM_EASTER_EGG) {
+			$easterEgg = '
+				<div class="bottom">
+					<label class="switch">
+						<input id="easter" type="checkbox">
+						<span class="slider round"></span>
+					</label>
+					
+					<span> Easter Egg</span>
+				</div>
+			';
+		}
+
 		return '<!DOCTYPE html>
 <html lang="de">
 	<head>
@@ -39,6 +54,7 @@ class Document {
 				<ul class="nav">
 				' . $this->menu->renderMenuItems() . '
 				</ul>
+				' . $easterEgg . '
 			</div>
 			<div class="content">
 				' . $this->view->getBody() . '
@@ -51,6 +67,44 @@ class Document {
 	protected function getHead() {
 		$output = array();
 
+		$easterEgg = null;
+
+		if (SM_EASTER_EGG) {
+			$easterEgg = '
+				<script type="text/javascript">
+					$(document).ready(function(){
+						var clickedElements = [];
+						
+						var handler = function(e){
+							if (!$(e.target).is("#easter") && !$(e.target).is(".content") && !$(e.target).is(".sidebar")) {
+								e.preventDefault();
+								
+								$(e.target).css("animation", "fall-down 300ms linear forwards");
+								
+								clickedElements.push($(e.target));
+								
+								return false;
+							}
+						};
+						
+						$("#easter, #easter ~ .slider").click(function(e){
+							e.stopPropagation();
+						 
+							if ($(this).is(":checked")) {
+								$(document).on("click", handler);
+							}
+							else {
+								$(document).unbind("click", handler);
+								
+								for (var i = 0; i < clickedElements.length; i++)
+									clickedElements[i].css("animation", "");
+							}
+						});
+					});
+				</script>
+			';
+		}
+
 		$output[] = '
 			<title>' . (!is_null($this->baseTitle) ? $this->baseTitle . " | " : null) . $this->documentTitle . '</title>
 			<meta charset="utf8">
@@ -59,6 +113,7 @@ class Document {
 			<link rel="stylesheet" href="lib/Highlighter/css/darcula.min.css">
 			<link rel="stylesheet" href="css/style.css">
 			<script type="text/javascript" src="lib/jQuery/jquery.min.js"></script>
+			' . $easterEgg . '
 		';
 
 		foreach ($this->cssFiles as $handle => $cssFile)

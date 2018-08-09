@@ -2,11 +2,14 @@
 
 define("SM_SOURCEFOLDER_PATH", realpath(__DIR__ . "/../src"));
 define("SM_LIBRARYFOLDER_PATH", realpath(__DIR__ . "/../lib"));
+define("SM_WEBFOLDER_PATH", realpath(__DIR__ . "/../www"));
 
 define("SM_DB_HOST", "localhost");
 define("SM_DB_USER", "root");
 define("SM_DB_PASSWORD", "");
 define("SM_DB_NAME", "snippetmanager");
+
+define("SM_EASTER_EGG", false);
 
 define("SM_DEBUG", true);
 

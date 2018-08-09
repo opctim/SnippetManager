@@ -67,15 +67,22 @@ $(document).ready(function () {
 
         var $this = $(this);
 
-        timeout = setTimeout(function () {
-            var spinner = $this.siblings(".fa");
-
-            spinner.show();
-
-            reloadSnippets(function () {
-                spinner.hide();
-            });
+        timeout = setTimeout(function(){
+            reloadSnippets();
         }, 600);
+
+        if ($this.val() !== "")
+            $this.siblings(".clear-field").show();
+        else
+            $this.siblings(".clear-field").hide();
+    });
+
+    searchField.siblings(".clear-field").click(function(){
+        searchField.val("");
+
+        $(this).hide();
+
+        reloadSnippets();
     });
 
     var newSnippetElement = $("#new-snippet");
@@ -100,6 +107,30 @@ $(document).ready(function () {
 
     $(".add-snippet").click(function () {
         $("#new-snippet").fadeIn();
+    });
+
+    $(document).on("click", ".categories .category", function(e){
+        e.preventDefault();
+
+        searchField.val('category:"' + $(this).data("name") + '"');
+
+        searchField.siblings(".clear-field").show();
+
+        reloadSnippets();
+
+        return false;
+    });
+
+    $(document).on("click", ".tags .tag", function(e){
+        e.preventDefault();
+
+        searchField.val('tag:"' + $(this).data("tag") + '"');
+
+        searchField.siblings(".clear-field").show();
+
+        reloadSnippets();
+
+        return false;
     });
 
     newSnippetElement.submit(function (e) {
@@ -141,12 +172,18 @@ $(document).ready(function () {
     var lastHtml = null;
 
     function reloadSnippets(done) {
+        var spinner = searchField.siblings(".fa.spinner");
+
+        spinner.show();
+
         $.ajax({
             url: "index.php",
             data: {
                 snippets: $("#search-field").val()
             },
             success: function (html) {
+                spinner.hide();
+
                 var snippetList = $("#snippet-list");
 
                 if (html !== lastHtml) {

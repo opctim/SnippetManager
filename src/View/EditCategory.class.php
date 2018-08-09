@@ -16,10 +16,13 @@ class EditCategory extends View {
 
 	public function init() {
 		$this->parent->addJavaScriptFiles([
+			"select2js"			=> "lib/Select2/select2.min.js",
 			"iro-js"			=> "lib/iro.js/iro.min.js",
 		]);
 
 		$this->parent->addCssFiles([
+			"select2css"		=> "lib/Select2/select2.min.css",
+			"select2-style"		=> "css/select2.style.css",
 			"categories-css"	=> "css/categories.page.css",
 		]);
 
@@ -39,6 +42,20 @@ class EditCategory extends View {
 							"border-color": color.hexString
 						});
 					});
+				   	
+				   	$("select.select2:not(.tags)").each(function(){
+				   	    if (typeof $(this).data("placeholder") !== "undefined")
+				   	    	$(this).select2({
+				   	    		placeholder: $(this).data("placeholder")
+				   	    	});
+				   	    else
+				   	        $(this).select2();
+				   	});
+				   
+				   	$("select.select2.tags").select2({
+				   		tags: true,
+				   		tokenSeparators: [",", " "]
+				   	});
 				});
 			</script>
 		');
@@ -62,6 +79,10 @@ class EditCategory extends View {
 							<div class="group">
 								<h5>Name</h5>
 								<input type="text" name="name" value="' . $this->category->Name . '" placeholder="Meine neue Kategorie" required>
+							</div>
+							<div class="group">
+								<h5>Sprache</h5>
+								' . LanguageSelect::render($this->category->Language) . '
 							</div>
 							<br>
 							<div class="group">

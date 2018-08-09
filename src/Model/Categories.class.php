@@ -25,12 +25,12 @@ class Categories {
 				WHERE 
 					CATEGORY_NAME LIKE '%$searchTerm%' OR 
 					CATEGORY_DESCRIPTION  LIKE '%$searchTerm%'
-				ORDER BY CATEGORY_NAME ASC
+				ORDER BY CATEGORY_ID ASC
 			");
 		}
 		else {
 			if (is_null($id)) {
-				$result = $db->query("SELECT * FROM category ORDER BY CATEGORY_NAME ASC");
+				$result = $db->query("SELECT * FROM category ORDER BY CATEGORY_ID ASC");
 			}
 			else {
 				$id = $db->real_escape_string($id);

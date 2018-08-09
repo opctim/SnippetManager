@@ -66,13 +66,14 @@ class MainController {
 		$ajaxRequestManager->add("newCategory", function($requestData){
 			$defaults = [
 				"name"			=> null,
+				"language"		=> null,
 				"description"	=> null,
 				"color"			=> null,
 			];
 
 			$requestData = (object)array_replace($defaults, $requestData);
 
-			Category::create($requestData->name, $requestData->description, $requestData->color);
+			Category::create($requestData->name, $requestData->language, $requestData->description, $requestData->color);
 		});
 
 		$ajaxRequestManager->add("deleteCategory", function($requestData){
@@ -121,6 +122,7 @@ class MainController {
 					$category = \SnippetManager\Model\Categories::get($_REQUEST["cid"]);
 
 					$category->Name = $_REQUEST["name"];
+					$category->Language = $_REQUEST["language"];
 					$category->Description = $_REQUEST["description"];
 					$category->Color = $_REQUEST["color"];
 

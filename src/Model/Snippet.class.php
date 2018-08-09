@@ -43,11 +43,11 @@ class Snippet {
 			$this->Tags = implode(" ", $this->Tags);
 
 		$categoryId = $db->real_escape_string($this->CategoryId);
-		$snippetName = $db->real_escape_string($this->Name);
-		$snippetText = $db->real_escape_string($this->Text);
-		$snippetTags = $db->real_escape_string($this->Tags);
+		$snippetName = $db->escapeAddQuotesOrSetNull($this->Name);
+		$snippetText = $db->escapeAddQuotesOrSetNull($this->Text);
+		$snippetTags = $db->escapeAddQuotesOrSetNull($this->Tags);
 
-		$db->query("UPDATE snippet SET CATEGORY_ID = '$categoryId', SNIPPET_NAME = '$snippetName', SNIPPET_TEXT = '$snippetText', SNIPPET_TAGS = '$snippetTags' WHERE SNIPPET_ID = " . $this->internalId);
+		$db->query("UPDATE snippet SET CATEGORY_ID = '$categoryId', SNIPPET_NAME = $snippetName, SNIPPET_TEXT = $snippetText, SNIPPET_TAGS = $snippetTags WHERE SNIPPET_ID = " . $this->internalId);
 
 		return $db->affected_rows > 0;
 	}
@@ -56,11 +56,11 @@ class Snippet {
 		$db = Database::getInstance();
 
 		$categoryId = $db->real_escape_string($categoryId);
-		$name = $db->real_escape_string($name);
-		$text = $db->real_escape_string($text);
-		$tags = $db->real_escape_string($tags);
+		$name = $db->escapeAddQuotesOrSetNull($name);
+		$text = $db->escapeAddQuotesOrSetNull($text);
+		$tags = $db->escapeAddQuotesOrSetNull($tags);
 
-		$db->query("INSERT INTO snippet(CATEGORY_ID, SNIPPET_NAME, SNIPPET_TEXT, SNIPPET_TAGS) VALUES($categoryId, '$name', '$text', '$tags')");
+		$db->query("INSERT INTO snippet(CATEGORY_ID, SNIPPET_NAME, SNIPPET_TEXT, SNIPPET_TAGS) VALUES($categoryId, $name, $text, $tags)");
 
 		if ($db->insert_id == 0)
 			return false;

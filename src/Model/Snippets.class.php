@@ -44,6 +44,24 @@ class Snippets {
 						ORDER BY SNIPPET_CREATED DESC
 					");
 				}
+				else if (preg_match('/(?:(?<REGULAR_SEARCHTERM>.*)\s+)?tag:"(?<TAG>[^"]+)"$/ui', $searchTerm, $matches)) {
+					$regularSearchTerm = $db->real_escape_string($matches["REGULAR_SEARCHTERM"]);
+					$tag = $db->real_escape_string($matches["TAG"]);
+
+					$result = $db->query("
+						SELECT * 
+						FROM snippet 
+							LEFT JOIN category USING(CATEGORY_ID) 
+						WHERE 
+							CONCAT(' ', SNIPPET_TAGS, ' ') LIKE '% $tag %' AND (
+								CATEGORY_NAME LIKE '%$searchTerm%' OR 
+								CATEGORY_DESCRIPTION  LIKE '%$regularSearchTerm%' OR
+								SNIPPET_TEXT LIKE '%$regularSearchTerm%' OR
+								SNIPPET_NAME LIKE '%$regularSearchTerm%'
+							)
+						ORDER BY SNIPPET_CREATED DESC
+					");
+				}
 				else {
 					$searchTerm = $db->real_escape_string($searchTerm);
 

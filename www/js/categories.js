@@ -57,13 +57,24 @@ $(document).ready(function(){
             opacity: "0.75"
         });
 
+        var name = form.find(':input[name="name"]').val();
+        var language = form.find(':input[name="language"]').val();
+        var description = form.find(':input[name="description"]').val();
+        var color = form.find(':input[name="color"]').val();
+
+        name = (name.trim() === "" ? null : name);
+        language = (language.trim() === "" ? null : language);
+        description = (description.trim() === "" ? null : description);
+        color = (color.trim() === "" ? null : color);
+
         $.ajax({
             url: "index.php",
             data: {
                 newCategory: {
-                    name: form.find(':input[name="name"]').val(),
-                    description: form.find(':input[name="description"]').val(),
-                    color: form.find(':input[name="color"]').val()
+                    name: name,
+                    language: language,
+                    description: description,
+                    color: color
                 }
             },
             success: function(response){

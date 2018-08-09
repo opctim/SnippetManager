@@ -32,53 +32,66 @@
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="16" name="CATEGORY_DESCRIPTION">
+    <column id="20" parent="16" name="CATEGORY_LANGUAGE">
       <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="21" parent="16" name="CATEGORY_DESCRIPTION">
+      <Position>4</Position>
       <DataType>longtext|0</DataType>
     </column>
-    <column id="21" parent="16" name="CATEGORY_COLOR">
-      <Position>4</Position>
+    <column id="22" parent="16" name="CATEGORY_COLOR">
+      <Position>5</Position>
       <DataType>varchar(128)|0</DataType>
     </column>
-    <key id="22" parent="16" name="PRIMARY">
+    <key id="23" parent="16" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>CATEGORY_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="23" parent="17" name="SNIPPET_ID">
+    <column id="24" parent="17" name="SNIPPET_ID">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="24" parent="17" name="CATEGORY_ID">
+    <column id="25" parent="17" name="CATEGORY_ID">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="25" parent="17" name="SNIPPET_NAME">
+    <column id="26" parent="17" name="SNIPPET_NAME">
       <Position>3</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="26" parent="17" name="SNIPPET_TEXT">
+    <column id="27" parent="17" name="SNIPPET_TEXT">
       <Position>4</Position>
       <DataType>longtext|0</DataType>
     </column>
-    <column id="27" parent="17" name="SNIPPET_TAGS">
+    <column id="28" parent="17" name="SNIPPET_TAGS">
       <Position>5</Position>
       <DataType>longtext|0</DataType>
-      <NotNull>1</NotNull>
     </column>
-    <column id="28" parent="17" name="SNIPPET_CREATED">
+    <column id="29" parent="17" name="SNIPPET_CREATED">
       <Position>6</Position>
       <DataType>timestamp|0</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <key id="29" parent="17" name="PRIMARY">
+    <index id="30" parent="17" name="CATEGORY_ID">
+      <ColNames>CATEGORY_ID</ColNames>
+    </index>
+    <key id="31" parent="17" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>SNIPPET_ID</ColNames>
       <Primary>1</Primary>
     </key>
+    <foreign-key id="32" parent="17" name="snippet_ibfk_1">
+      <ColNames>CATEGORY_ID</ColNames>
+      <RefSchemaName>snippetmanager</RefSchemaName>
+      <RefTableName>category</RefTableName>
+      <RefColNames>CATEGORY_ID</RefColNames>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
   </database-model>
 </dataSource>

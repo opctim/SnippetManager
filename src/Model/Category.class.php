@@ -14,6 +14,7 @@ class Category {
 
 	public $ID = null;
 	public $Name = null;
+	public $Language = null;
 	public $Description = null;
 	public $Color = null;
 
@@ -22,6 +23,7 @@ class Category {
 
 		$this->ID = $databaseData->CATEGORY_ID;
 		$this->Name = $databaseData->CATEGORY_NAME;
+		$this->Language = $databaseData->CATEGORY_LANGUAGE;
 		$this->Description = $databaseData->CATEGORY_DESCRIPTION;
 		$this->Color = $databaseData->CATEGORY_COLOR;
 	}
@@ -36,23 +38,27 @@ class Category {
 	public function writeToDatabase() {
 		$db = Database::getInstance();
 
-		$categoryName = $db->real_escape_string($this->Name);
-		$categoryDescription = $db->real_escape_string($this->Description);
-		$categoryColor = $db->real_escape_string($this->Color);
+		$categoryName = $db->escapeAddQuotesOrSetNull($this->Name);
+		$categoryLanguage = $db->escapeAddQuotesOrSetNull($this->Language);
+		$categoryDescription = $db->escapeAddQuotesOrSetNull($this->Description);
+		$categoryColor = $db->escapeAddQuotesOrSetNull($this->Color);
 
-		$db->query("UPDATE category SET CATEGORY_NAME = '$categoryName', CATEGORY_DESCRIPTION = '$categoryDescription', CATEGORY_COLOR = '$categoryColor' WHERE CATEGORY_ID = " . $this->internalId);
+		$db->query("UPDATE category SET CATEGORY_NAME = $categoryName, CATEGORY_LANGUAGE = $categoryLanguage, CATEGORY_DESCRIPTION = $categoryDescription, CATEGORY_COLOR = $categoryColor WHERE CATEGORY_ID = " . $this->internalId);
 
 		return $db->affected_rows > 0;
 	}
 
-	public static function create($name, $description, $color) {
+	public static function create($name, $language, $description, $color) {
 		$db = Database::getInstance();
 
-		$name = $db->real_escape_string($name);
-		$description = $db->real_escape_string($description);
-		$color = $db->real_escape_string($color);
+		$name = $db->escapeAddQuotesOrSetNull($name);
+		$language = $db->escapeAddQuotesOrSetNull($language);
+		$description = $db->escapeAddQuotesOrSetNull($description);
+		$color = $db->escapeAddQuotesOrSetNull($color);
 
-		$db->query("INSERT INTO category(CATEGORY_NAME, CATEGORY_DESCRIPTION, CATEGORY_COLOR) VALUES('$name', '$description', '$color')");
+		$db->query("INSERT INTO category(CATEGORY_NAME, CATEGORY_LANGUAGE, CATEGORY_DESCRIPTION, CATEGORY_COLOR) VALUES($name, $language, $description, $color)");
+
+		echo $db->error;
 
 		if ($db->insert_id == 0)
 			return false;
@@ -61,6 +67,7 @@ class Category {
 
 		$databaseData->CATEGORY_ID = $db->insert_id;
 		$databaseData->CATEGORY_NAME = $name;
+		$databaseData->CATEGORY_LANGUAGE = $language;
 		$databaseData->CATEGORY_DESCRIPTION = $description;
 		$databaseData->CATEGORY_COLOR = $color;
 

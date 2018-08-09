@@ -16,14 +16,29 @@ class EditSnippet extends View {
 	}
 
 	public function init() {
-		$this->parent->addJavaScriptFiles([
-			"select2js"		=> "lib/Select2/select2.min.js",
-		]);
+		$files = [
+			"select2js"					=> "lib/Select2/select2.min.js",
+			"codemirror"				=> "lib/CodeMirror/lib/codemirror.js",
+			"codemirror-matchbrackets"	=> "lib/CodeMirror/addon/edit/matchbrackets.js",
+			"codemirror-xml"			=> "lib/CodeMirror/mode/xml/xml.js",
+			"codemirror-javascript"		=> "lib/CodeMirror/mode/javascript/javascript.js",
+			"codemirror-css"			=> "lib/CodeMirror/mode/css/css.js",
+			"codemirror-clike"			=> "lib/CodeMirror/mode/clike/clike.js",
+			"codemirror-htmlmixed"		=> "lib/CodeMirror/mode/htmlmixed/htmlmixed.js",
+		];
+
+		$languageName = strtolower($this->snippet->getCategory()->Name);
+
+		if (file_exists(SM_WEBFOLDER_PATH . "/lib/CodeMirror/mode/$languageName/$languageName.js"))
+			$files["codemirror_language"] = "lib/CodeMirror/mode/$languageName/$languageName.js";
+
+		$this->parent->addJavaScriptFiles($files);
 
 		$this->parent->addCssFiles([
-			"select2css"	=> "lib/Select2/select2.min.css",
-			"select2-style"	=> "css/select2.style.css",
-			"snippets-css"	=> "css/snippets.page.css",
+			"select2css"		=> "lib/Select2/select2.min.css",
+			"codemirror-css"	=> "lib/CodeMirror/lib/codemirror.css",
+			"select2-style"		=> "css/select2.style.css",
+			"snippets-css"		=> "css/snippets.page.css",
 		]);
 
 		$this->parent->addHeadHtml('
@@ -47,6 +62,11 @@ class EditSnippet extends View {
 				   	});
 				   	
 				   	tags.val(' . $this->getSnippetTagValues() . ').trigger("change");
+				   	
+				   	code = CodeMirror.fromTextArea(document.getElementById("code-textarea"), {
+						lineNumbers: true,
+						mode: "text/x-php"
+					});
 				});
 			</script>
 		');
@@ -84,7 +104,7 @@ class EditSnippet extends View {
 							<div class="col-md-8">
 								<div class="group">
 									<h5>Code</h5>
-									<textarea name="text" placeholder="(new Foo())->bar();">' . $this->snippet->Text . '</textarea>
+									<textarea name="text" id="code-textarea" placeholder="(new Foo())->bar();">' . $this->snippet->Text . '</textarea>
 								</div>
 							</div>
 						</div>
@@ -115,7 +135,7 @@ class EditSnippet extends View {
 
 	protected function getSnippetTagSelectOptions() {
 		$output = array();
-		$tags = preg_split("/\s+/", $this->snippet->Tags);
+		$tags = $this->getTags();
 
 		if (count($tags) == 0)
 			return null;
@@ -127,11 +147,20 @@ class EditSnippet extends View {
 	}
 
 	protected function getSnippetTagValues() {
-		$tags = preg_split("/\s+/", $this->snippet->Tags);
+		$tags = $this->getTags();
 
 		if (count($tags) == 0)
 			return "[]";
 
 		return '["' . implode('","', $tags) . '"]';
+	}
+
+	protected function getTags() {
+		$tags = preg_split("/\s+/", $this->snippet->Tags);
+
+		if (count($tags) == 1 && $tags[0] === "")
+			$tags = array();
+
+		return $tags;
 	}
 }

@@ -24,6 +24,7 @@
 #category-list {
   .category-link {
     display: block;
+    margin-bottom: 30px;
     text-decoration: none;
     &:active, &:visited, &:hover, &:focus {
       text-decoration: none;
@@ -138,7 +139,7 @@
       width: 100%;
     }
     .select2 {
-      width: 100%;
+      width: 100% !important;
     }
     #color-picker {
       padding: 15px;
@@ -340,5 +341,11 @@
     &:hover {
       color: @red;
     }
+  }
+}
+
+#edit-category {
+  .select2-container--default .select2-selection--single, #edit-snippet .select2-container--default .select2-selection--multiple {
+    background-color: transparent;
   }
 }

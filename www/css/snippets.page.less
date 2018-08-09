@@ -16,9 +16,14 @@
   }
   .fa {
     position: absolute;
-    right: 5px;
+    right: -15px;
     top: 3px;
     display: none;
+  }
+  .clear-field {
+    right: 5px;
+    cursor: pointer;
+    color: darken(@darkGrey, 15%);
   }
 }
 
@@ -101,7 +106,8 @@
           color: lighten(@darkGrey, 20%);
           overflow-y: hidden;
           overflow-x: auto;
-          span {
+          .tag {
+            cursor: pointer;
             display: inline;
             border: 1px solid lighten(@darkGrey, 30%);
             margin: 0 3px;
@@ -109,6 +115,16 @@
             -webkit-border-radius: 10px;
             -moz-border-radius: 10px;
             padding: 0 5px;
+            -webkit-transition: all 150ms;
+            -moz-transition: all 150ms;
+            -ms-transition: all 150ms;
+            -o-transition: all 150ms;
+            transition: all 150ms;
+            &:hover {
+              background-color: @red;
+              color: @white;
+              border-color: @red;
+            }
           }
         }
       }
@@ -452,5 +468,30 @@
   transition: all 600ms;
   &.visible {
     top: 50px;
+  }
+}
+
+.categories {
+  padding: 25px 0;
+  .category {
+    padding: 10px 25px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    opacity: 0.85;
+    -webkit-transition: all 150ms;
+    -moz-transition: all 150ms;
+    -ms-transition: all 150ms;
+    -o-transition: all 150ms;
+    transition: all 150ms;
+    max-width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
